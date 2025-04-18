@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				workflow: {
+					sales: '#4C9AFF',
+					checker: '#6554C0',
+					onboarding: '#00B8D9',
+					payment: '#36B37E',
+					escalation1: '#FF8B00',
+					escalation2: '#FF5630',
+					escalation3: '#FF0000',
+					escalation4: '#6554C0'
+				},
+				status: {
+					pending: '#FF8B00',
+					inProgress: '#00B8D9',
+					approved: '#36B37E',
+					rejected: '#FF5630',
+					escalated: '#FF0000'
 				}
 			},
 			borderRadius: {
@@ -84,11 +102,16 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-status': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.7' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-status': 'pulse-status 2s infinite'
 			}
 		}
 	},
