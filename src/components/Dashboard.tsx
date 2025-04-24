@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useWorkflow } from "../context/WorkflowContext";
 import FileList from "./FileList";
 import FileDetails from "./FileDetails";
 import UserRoleSelector from "./UserRoleSelector";
-import NewFileForm from "./NewFileForm";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, RefreshCw } from "lucide-react";
 import { WorkflowFile } from "@/types/workflow";
@@ -18,10 +17,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { currentUser, getFilesForUser } = useWorkflow();
   const [selectedFile, setSelectedFile] = useState<WorkflowFile | null>(null);
   const [files, setFiles] = useState<WorkflowFile[]>([]);
-  const [showNewFileForm, setShowNewFileForm] = useState(false);
   const [activeTab, setActiveTab] = useState("pending");
 
   useEffect(() => {
@@ -35,17 +34,10 @@ const Dashboard = () => {
 
   const handleSelectFile = (file: WorkflowFile) => {
     setSelectedFile(file);
-    setShowNewFileForm(false);
   };
 
   const handleNewFile = () => {
-    setSelectedFile(null);
-    setShowNewFileForm(true);
-  };
-
-  const handleFileCreated = () => {
-    setShowNewFileForm(false);
-    refreshFiles();
+    navigate("/upload");
   };
 
   const getPendingFiles = () => {
@@ -140,24 +132,18 @@ const Dashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle>
-              {showNewFileForm 
-                ? "Create New File" 
-                : selectedFile 
-                  ? `File Details: ${selectedFile.customerName} (${selectedFile.dealOrderId})` 
-                  : "Select a file to view details"}
+              {selectedFile 
+                ? `File Details: ${selectedFile.customerName} (${selectedFile.dealOrderId})` 
+                : "Select a file to view details"}
             </CardTitle>
             <CardDescription>
-              {showNewFileForm 
-                ? "Fill out the form to create a new file" 
-                : selectedFile 
-                  ? `Current Status: ${selectedFile.currentStatus}` 
-                  : "Or create a new file if you are in the Sales role"}
+              {selectedFile 
+                ? `Current Status: ${selectedFile.currentStatus}` 
+                : "Or create a new file if you are in the Sales role"}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {showNewFileForm ? (
-              <NewFileForm onFileCreated={handleFileCreated} onCancel={() => setShowNewFileForm(false)} />
-            ) : selectedFile ? (
+            {selectedFile ? (
               <FileDetails file={selectedFile} onUpdated={refreshFiles} />
             ) : (
               <div className="text-center py-10 text-gray-500">
