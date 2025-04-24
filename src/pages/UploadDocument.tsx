@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FileUp, Save, ArrowLeft } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
+import { UserRole } from "@/types/workflow";
 import {
   Card,
   CardContent,
@@ -66,7 +67,7 @@ const UploadDocument = () => {
       amount: parseFloat(amount),
       submissionDate: now,
       documents,
-      currentRole: "CHECKER",
+      currentRole: UserRole.CHECKER, // Use enum value instead of string literal
       verification: {
         status: "PENDING",
         comments: "",
